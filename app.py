@@ -1,24 +1,57 @@
 from flask import Flask, render_template, request, redirect, url_for
+from flask_sqlalchemy import SQLAlchemy
 
+import sqlite3
+
+# Initialize Flask app
 app = Flask(__name__)
 
-@app.route('/login')
-def home():
-    return render_template('login.html')
+# Configure the database (using SQLite for simplicity)
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///employe.db"   # Path
+
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False    # Suppress warning and enables resource optimization by disabling modification tracking 
+
+# Initialize SQLAlchemy
+db = SQLAlchemy(app)
+
+class Employee(db.Model):    # Inheriting from db.Model which is a base class for all models in SQLAlchemy.  If i dont do this, SQLAlchemy wont recognise it as a database and then it wont create a table for it.
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique= True, nullable=False)
+    password = db.Column(db.String(100), nullable=False)
+
+    def __repr__(self):
+        return f'Employee {self.username, self.email, self.password}'
+
+
+
+
+def get_employe():
+    return Employee.query.all()                          # Return the fetched employee records
+
+
+
+@app.route('/')
+def login():
+    Employee = get_employe()
+    return render_template('login.html', employee=Employee)
 
 @app.route('/dashboard')
-def dashbaord():
+def dashboard():
     return render_template('dashboard.html')
 
-@app.route('/addemployee')
+@app.route('/add_employee')
 def add_employee():
-    return render_template('add_employe.html')
+    return render_template('add_employee.html')
 
 @app.route('/signup')
 def signup():
     return render_template('signup.html')
 
+
 if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()
     app.run(debug=True)
 
 
