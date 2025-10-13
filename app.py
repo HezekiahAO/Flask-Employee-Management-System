@@ -31,7 +31,7 @@ def get_employe():
 
 
 
-@app.route('/')
+@app.route('/', methods=["POST"])
 def login():
     Employee = get_employe()
     return render_template('login.html', employee=Employee)
@@ -39,6 +39,8 @@ def login():
 @app.route('/dashboard')
 def dashboard():
     return render_template('dashboard.html')
+
+    
 
 @app.route('/add_employee')
 def add_employee():
