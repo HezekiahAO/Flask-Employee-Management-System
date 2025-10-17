@@ -31,7 +31,7 @@ def get_employe():
 
 
 
-@app.route('/', methods=["POST"])
+@app.route('/')
 def login():
     Employee = get_employe()
     return render_template('login.html', employee=Employee)
