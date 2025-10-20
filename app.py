@@ -34,7 +34,10 @@ def get_employe():
 @app.route('/')
 def login():
     Employee = get_employe()
-    return render_template('login.html', employee=Employee)
+    if request.method == "POST":
+        email = request.form.get("email")
+        password = request.form.get("password")
+    return redirect('/dashboard')
 
 @app.route('/dashboard')
 def dashboard():
@@ -44,12 +47,15 @@ def dashboard():
 
 @app.route('/add_employee')
 def add_employee():
-    return render_template('add_employee.html')
+    return render_template('dashboard.html')
 
 @app.route('/signup')
 def signup():
     return render_template('signup.html')
 
+@app.route("/Logout")
+def logout():
+    return redirect("/login")
 
 if __name__ == '__main__':
     with app.app_context():
