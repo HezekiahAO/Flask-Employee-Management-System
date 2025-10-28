@@ -47,7 +47,7 @@ def dashboard():
 
 @app.route('/add_employee')
 def add_employee():
-    return render_template('dashboard.html')
+    return render_template('/add_employee.html')
 
 @app.route('/signup')
 def signup():
