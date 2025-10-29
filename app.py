@@ -37,7 +37,8 @@ def login():
     if request.method == "POST":
         email = request.form.get("email")
         password = request.form.get("password")
-    return redirect('/dashboard')
+        return render_template("/signup")
+    return redirect('/add_employee')
 
 @app.route('/dashboard')
 def dashboard():
@@ -47,7 +48,7 @@ def dashboard():
 
 @app.route('/add_employee')
 def add_employee():
-    return render_template('/add_employee.html')
+    return render_template('add_employee.html')
 
 @app.route('/signup')
 def signup():
@@ -61,6 +62,4 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
     app.run(debug=True)
-
-
 
