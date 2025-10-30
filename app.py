@@ -31,14 +31,22 @@ def get_employe():
 
 
 
-@app.route('/')
+@app.route('/', methods=["GET", "POST"])
 def login():
-    Employee = get_employe()
     if request.method == "POST":
         email = request.form.get("email")
         password = request.form.get("password")
-        return render_template("/signup")
-    return redirect('/add_employee')
+
+        if email and password:
+            
+            return redirect("/add_employee")
+        else:
+            return render_template('/add_employee')
+        
+    return render_template('signup.html')
+
+
+
 
 @app.route('/dashboard')
 def dashboard():
