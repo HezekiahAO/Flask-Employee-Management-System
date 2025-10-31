@@ -37,14 +37,13 @@ def login():
         email = request.form.get("email")
         password = request.form.get("password")
 
-        if email and password:
+        if email and password:                      # Return the add_employee dashboard once the email and password tab is filled
             
             return redirect("/add_employee")
         else:
             return render_template('/add_employee')
         
     return render_template('signup.html')
-
 
 
 
