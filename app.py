@@ -31,21 +31,23 @@ def get_employe():
 
 
 
-@app.route('/', methods=["GET", "POST"])
-def login():
+@app.route('/')
+def login():        
+    return render_template('/login.html')
+
+@app.route('/signup')
+def signup():
     if request.method == "POST":
         email = request.form.get("email")
         password = request.form.get("password")
 
         if email and password:                      # Return the add_employee dashboard once the email and password tab is filled
             
-            return redirect("/add_employee")
+            return redirect("/login.html")
         else:
-            return render_template('/add_employee')
+            return 'Kindly enter a valid email or password'
         
     return render_template('signup.html')
-
-
 
 @app.route('/dashboard')
 def dashboard():
@@ -55,9 +57,7 @@ def dashboard():
 def add_employee():
     return render_template('add_employee.html')
 
-@app.route('/signup')
-def signup():
-    return render_template('signup.html')
+
 
 @app.route("/Logout")
 def logout():
@@ -66,5 +66,4 @@ def logout():
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-    app.run(debug=True)
-
+    app.run(host = '', port = 5000, debug=True)
